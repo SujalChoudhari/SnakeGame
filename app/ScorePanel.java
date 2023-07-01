@@ -1,12 +1,26 @@
 package app;
+
 import javax.swing.JPanel;
-import java.awt.Color;
-import java.awt.Dimension;
-import java.awt.Font;
-import java.awt.Graphics;
+import java.awt.*;
+
+/**
+ * The ScorePanel class represents a JPanel that displays the current score of
+ * the game.
+ * It extends the JPanel class and overrides the paintComponent method to
+ * display the score.
+ * The score can be set using the setScore method and retrieved using the
+ * getScore method.
+ * The ScorePanel class is a singleton, meaning that only one instance of it can
+ * exist at a time.
+ * The instance can be accessed using the static Instance field.
+ * 
+ * @extnds JPanel
+ */
 
 public class ScorePanel extends JPanel {
-    public static ScorePanel Instance; 
+
+    // Singleton instance for Easy access
+    public static ScorePanel Instance;
     private int score;
 
     public ScorePanel() {
@@ -21,7 +35,7 @@ public class ScorePanel extends JPanel {
         repaint();
     }
 
-    public int getScore(){
+    public int getScore() {
         return this.score;
     }
 

@@ -10,6 +10,14 @@ import javax.swing.Timer;
 
 import entity.*;
 
+/**
+ * GamePanel is a JPanel that is responsible for drawing the game objects and
+ * handling the game logic. GamePanel also handles the user input.
+ * End screen is handled by GamePanel.
+ * 
+ * @extends JPanel
+ * @implements ActionListener
+ */
 public class GamePanel extends JPanel implements ActionListener {
 
     public static final int PANEL_WIDTH = GameDimensions.PANEL_SIZE.width;
@@ -48,6 +56,7 @@ public class GamePanel extends JPanel implements ActionListener {
             walls.add(new Wall(PANEL_WIDTH - GameDimensions.WALL_WIDTH, i * GameDimensions.WALL_HEIGHT));
         }
 
+        // Rendering loop (calls actionPerformed() every DELAY milliseconds)
         timer = new Timer(DELAY, this);
         timer.start();
 
@@ -97,6 +106,10 @@ public class GamePanel extends JPanel implements ActionListener {
         }
     }
 
+    /**
+     * Checks if the snake collides with food, walls or itself.
+     * Decides if the game is over or not.
+     */
     private void checkCollision() {
         Rectangle snakeHeadBounds = snake.getHeadBounds();
 
@@ -123,6 +136,13 @@ public class GamePanel extends JPanel implements ActionListener {
 
     }
 
+    /**
+     * Generates a random (valid) position for the food.
+     * The position is always calculated so that the food is not placed on a wall or
+     * on the snake.
+     * 
+     * @return A Point object that represents the position of the food.
+     */
     private Point generateRandomFoodPosition() {
         int maxX = GameDimensions.PANEL_SIZE.width - GameDimensions.FOOD_SIZE;
         int maxY = GameDimensions.PANEL_SIZE.height - GameDimensions.FOOD_SIZE;
@@ -138,6 +158,13 @@ public class GamePanel extends JPanel implements ActionListener {
         return new Point(x, y);
     }
 
+    /**
+     * Checks if the given coordinates are inside a wall.
+     * 
+     * @param x coordinate of the point
+     * @param y coordinate of the point
+     * @return true if the point is inside a wall, false otherwise
+     */
     private boolean isWallCollision(int x, int y) {
         for (Wall wall : walls) {
             if (wall.getBounds().contains(x, y)) {
@@ -147,6 +174,13 @@ public class GamePanel extends JPanel implements ActionListener {
         return false;
     }
 
+    /**
+     * Checks if the given coordinates are inside the snake.
+     * 
+     * @param x coordinate of the point
+     * @param y coordinate of the point
+     * @return true if the point is inside the snake, false otherwise
+     */
     private boolean isSnakeCollision(int x, int y) {
         for (Point snakeSegment : snake.getSegments()) {
             if (snakeSegment.getX() == x && snakeSegment.getY() == y) {
@@ -156,6 +190,12 @@ public class GamePanel extends JPanel implements ActionListener {
         return false;
     }
 
+    /**
+     * Input handler for the game.
+     * Handles the user input.
+     * 
+     * @extends KeyAdapter
+     */
     private class GameKeyListener extends KeyAdapter {
         @Override
         public void keyPressed(KeyEvent e) {

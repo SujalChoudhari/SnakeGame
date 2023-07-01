@@ -6,6 +6,9 @@ import java.util.ArrayList;
 import app.GameDimensions;
 import app.GamePanel;
 
+/**
+ * Represents the snake entity in the game.
+ */
 public class Snake {
 
     private static final int SIZE = GameDimensions.SNAKE_SIZE;
@@ -16,6 +19,9 @@ public class Snake {
     private Direction direction;
     private boolean growing;
 
+    /**
+     * Initializes a new instance of the Snake class.
+     */
     public Snake() {
         segments = new ArrayList<>();
         direction = Direction.RIGHT;
@@ -29,6 +35,9 @@ public class Snake {
         }
     }
 
+    /**
+     * Moves the snake in the current direction.
+     */
     public void move() {
         Point head = new Point(segments.get(0));
         switch (direction) {
@@ -55,6 +64,11 @@ public class Snake {
         }
     }
 
+    /**
+     * Draws the snake on the specified graphics object.
+     * 
+     * @param g The graphics object to draw on.
+     */
     public void draw(Graphics g) {
         g.setColor(COLOR);
         for (Point segment : segments) {
@@ -62,6 +76,11 @@ public class Snake {
         }
     }
 
+    /**
+     * Sets the direction of the snake.
+     * 
+     * @param direction The new direction of the snake.
+     */
     public void setDirection(Direction direction) {
         if (this.direction == Direction.UP && direction == Direction.DOWN) {
             return;
@@ -78,15 +97,30 @@ public class Snake {
         this.direction = direction;
     }
 
+    /**
+     * Gets the bounding rectangle of the snake's head.
+     * 
+     * @return The bounding rectangle of the snake's head.
+     */
     public Rectangle getHeadBounds() {
         Point head = segments.get(0);
         return new Rectangle(head.x, head.y, SIZE, SIZE);
     }
 
+    /**
+     * Gets the list of segments that make up the snake.
+     * 
+     * @return The list of segments that make up the snake.
+     */
     public ArrayList<Point> getSegments() {
         return segments;
     }
 
+    /**
+     * Checks if the snake has collided with itself.
+     * 
+     * @return True if the snake has collided with itself, false otherwise.
+     */
     public boolean checkSelfCollision() {
         Rectangle headBounds = getHeadBounds();
         for (int i = 1; i < segments.size(); i++) {
@@ -99,8 +133,11 @@ public class Snake {
         return false;
     }
 
-
-
+    /**
+     * Sets whether the snake is growing or not.
+     * 
+     * @param growing True if the snake is growing, false otherwise.
+     */
     public void setGrowing(boolean growing) {
         this.growing = growing;
     }

@@ -1,7 +1,15 @@
 package app;
+
 import javax.swing.JFrame;
 import java.awt.BorderLayout;
 
+/**
+ * Application class is the Entry point of the application.
+ * It is responsible for creating the JFrame and adding the GamePanel and
+ * ScorePanel to it.
+ * Application is a standard Swing JFrame.
+ * 
+ */
 public class Application extends JFrame {
 
     private GamePanel gamePanel;
@@ -24,6 +32,6 @@ public class Application extends JFrame {
     }
 
     public static void main(String[] args) {
-        new Application();
+        new Application(); // Start the application (new Window)
     }
 }
