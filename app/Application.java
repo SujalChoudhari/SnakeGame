@@ -4,6 +4,7 @@ import java.awt.BorderLayout;
 
 public class Application extends JFrame {
 
+    private GamePanel gamePanel;
     private ScorePanel scorePanel;
 
     public Application() {
@@ -11,8 +12,10 @@ public class Application extends JFrame {
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setResizable(false);
 
+        gamePanel = new GamePanel();
         scorePanel = new ScorePanel();
 
+        add(gamePanel);
         add(scorePanel, BorderLayout.NORTH);
 
         pack();
