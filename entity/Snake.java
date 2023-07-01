@@ -3,11 +3,12 @@ package entity;
 import java.awt.*;
 import java.util.ArrayList;
 
+import app.GameDimensions;
 import app.GamePanel;
 
 public class Snake {
 
-    private static final int SIZE = 20;
+    private static final int SIZE = GameDimensions.SNAKE_SIZE;
     private static final int START_LENGTH = 3;
     private static final Color COLOR = Color.GREEN;
 

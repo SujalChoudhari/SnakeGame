@@ -2,11 +2,12 @@ package entity;
 
 import java.awt.*;
 
+import app.GameDimensions;
 import app.GamePanel;
 
 public class Food {
 
-    private static final int SIZE = 20;
+    private static final int SIZE = GameDimensions.FOOD_SIZE;
     private static final Color COLOR = Color.RED;
 
     private Point position;
@@ -29,8 +30,8 @@ public class Food {
     }
 
     private Point generateRandomPosition() {
-        int x = (int) (Math.random() * GamePanel.PANEL_WIDTH / SIZE) * SIZE;
-        int y = (int) (Math.random() * GamePanel.PANEL_HEIGHT / SIZE) * SIZE;
+        int x = (int) (Math.random() * (GamePanel.PANEL_WIDTH - 20) / SIZE) * SIZE;
+        int y = (int) (Math.random() * (GamePanel.PANEL_HEIGHT - 20) / SIZE) * SIZE;
         return new Point(x, y);
     }
 }

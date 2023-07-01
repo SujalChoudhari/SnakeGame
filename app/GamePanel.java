@@ -12,9 +12,9 @@ import entity.*;
 
 public class GamePanel extends JPanel implements ActionListener {
 
-    public static final int PANEL_WIDTH = 800;
-    public static final int PANEL_HEIGHT = 600;
-    private static final int DELAY = 150;
+    public static final int PANEL_WIDTH = GameDimensions.PANEL_SIZE.width;
+    public static final int PANEL_HEIGHT = GameDimensions.PANEL_SIZE.height;
+    private static final int DELAY = 200;
 
     private Snake snake;
     private Food food;
@@ -74,11 +74,22 @@ public class GamePanel extends JPanel implements ActionListener {
             for (Wall wall : walls) {
                 wall.draw(g);
             }
+
         }
+
+        // Show "P to pause and R to restart" message
+        g.setColor(Color.WHITE);
+        g.setFont(new Font("Arial", 0, 20));
+        String pauseMsg = "P to pause and R to reset";
+        int msgWidth = g.getFontMetrics().stringWidth(pauseMsg);
+        int msgHeight = g.getFontMetrics().getHeight();
+        int x = (PANEL_WIDTH - msgWidth) / 2; // Center the message
+        int y = PANEL_HEIGHT - msgHeight; // Center the message but at bottom
+        g.drawString(pauseMsg, x, y);
     }
 
     @Override
-    public void actionPerformed(ActionEvent e) {    // Event loop
+    public void actionPerformed(ActionEvent e) { // Event loop
         if (!gameOver) {
             snake.move(); // Update
             checkCollision(); // Ckecks
@@ -119,10 +130,11 @@ public class GamePanel extends JPanel implements ActionListener {
         Random random = new Random();
         int x, y;
         do {
-            x = random.nextInt(maxX / GameDimensions.FOOD_SIZE) * GameDimensions.FOOD_SIZE;
-            y = random.nextInt(maxY / GameDimensions.FOOD_SIZE) * GameDimensions.FOOD_SIZE;
+            x = random.nextInt((maxX - 1) / GameDimensions.FOOD_SIZE) * GameDimensions.FOOD_SIZE;
+            y = random.nextInt((maxY - 1) / GameDimensions.FOOD_SIZE) * GameDimensions.FOOD_SIZE;
         } while (isWallCollision(x, y) || isSnakeCollision(x, y));
 
+        System.out.println("Food position: " + x + ", " + y);
         return new Point(x, y);
     }
 
@@ -149,14 +161,25 @@ public class GamePanel extends JPanel implements ActionListener {
         public void keyPressed(KeyEvent e) {
             int keyCode = e.getKeyCode();
 
-            if (keyCode == KeyEvent.VK_UP) {
+            if (keyCode == KeyEvent.VK_UP || keyCode == KeyEvent.VK_W) {
                 snake.setDirection(Direction.UP);
-            } else if (keyCode == KeyEvent.VK_DOWN) {
+            } else if (keyCode == KeyEvent.VK_DOWN || keyCode == KeyEvent.VK_S) {
                 snake.setDirection(Direction.DOWN);
-            } else if (keyCode == KeyEvent.VK_LEFT) {
+            } else if (keyCode == KeyEvent.VK_LEFT || keyCode == KeyEvent.VK_A) {
                 snake.setDirection(Direction.LEFT);
-            } else if (keyCode == KeyEvent.VK_RIGHT) {
+            } else if (keyCode == KeyEvent.VK_RIGHT || keyCode == KeyEvent.VK_D) {
                 snake.setDirection(Direction.RIGHT);
+            } else if (keyCode == KeyEvent.VK_P) {
+                if (timer.isRunning()) {
+                    timer.stop();
+                } else {
+                    timer.start();
+                }
+            } else if (keyCode == KeyEvent.VK_R) {
+                ScorePanel.Instance.setScore(0);
+                snake = new Snake();
+                food = new Food();
+                gameOver = false;
             }
         }
     }
