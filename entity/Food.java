@@ -2,8 +2,8 @@ package entity;
 
 import java.awt.*;
 
-import app.GameDimensions;
-import app.GamePanel;
+import game.Game;
+import utils.Constants;
 
 /**
  * The Food class represents the food that the snake eats to grow
@@ -12,7 +12,7 @@ import app.GamePanel;
 public class Food {
 
     // Constants for the size and color of the food
-    private static final int SIZE = GameDimensions.FOOD_SIZE;
+    private static final int SIZE = Constants.FOOD_SIZE;
     private static final Color COLOR = Color.RED;
 
     // The position of the food
@@ -60,8 +60,8 @@ public class Food {
      * @return A random position for the food
      */
     private Point generateRandomPosition() {
-        int x = (int) (Math.random() * (GamePanel.PANEL_WIDTH - 20) / SIZE) * SIZE;
-        int y = (int) (Math.random() * (GamePanel.PANEL_HEIGHT - 20) / SIZE) * SIZE;
+        int x = (int) (Math.random() * (Game.PANEL_WIDTH - 20) / SIZE) * SIZE;
+        int y = (int) (Math.random() * (Game.PANEL_HEIGHT - 20) / SIZE) * SIZE;
         return new Point(x, y);
     }
 }

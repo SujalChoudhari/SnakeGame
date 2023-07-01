@@ -1,6 +1,10 @@
-package app;
+
 
 import javax.swing.JFrame;
+
+import game.Game;
+import game.Score;
+
 import java.awt.BorderLayout;
 
 /**
@@ -12,16 +16,16 @@ import java.awt.BorderLayout;
  */
 public class Application extends JFrame {
 
-    private GamePanel gamePanel;
-    private ScorePanel scorePanel;
+    private Game gamePanel;
+    private Score scorePanel;
 
     public Application() {
         setTitle("Snake Game");
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setResizable(false);
 
-        gamePanel = new GamePanel();
-        scorePanel = new ScorePanel();
+        gamePanel = new Game();
+        scorePanel = new Score();
 
         add(gamePanel);
         add(scorePanel, BorderLayout.NORTH);

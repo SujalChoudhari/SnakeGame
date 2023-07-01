@@ -1,4 +1,4 @@
-package app;
+package game;
 
 import javax.swing.JPanel;
 import java.awt.*;
@@ -9,19 +9,21 @@ import java.util.Random;
 import javax.swing.Timer;
 
 import entity.*;
+import utils.Constants;
+import utils.Direction;
 
 /**
- * GamePanel is a JPanel that is responsible for drawing the game objects and
+ * Game is a JPanel that is responsible for drawing the game objects and
  * handling the game logic. GamePanel also handles the user input.
  * End screen is handled by GamePanel.
  * 
  * @extends JPanel
  * @implements ActionListener
  */
-public class GamePanel extends JPanel implements ActionListener {
+public class Game extends JPanel implements ActionListener {
 
-    public static final int PANEL_WIDTH = GameDimensions.PANEL_SIZE.width;
-    public static final int PANEL_HEIGHT = GameDimensions.PANEL_SIZE.height;
+    public static final int PANEL_WIDTH = Constants.PANEL_SIZE.width;
+    public static final int PANEL_HEIGHT = Constants.PANEL_SIZE.height;
     private static final int DELAY = 200;
 
     private Snake snake;
@@ -30,7 +32,7 @@ public class GamePanel extends JPanel implements ActionListener {
     private Timer timer;
     private boolean gameOver;
 
-    public GamePanel() {
+    public Game() {
         setPreferredSize(new Dimension(PANEL_WIDTH, PANEL_HEIGHT));
         setBackground(Color.BLACK);
         setFocusable(true);
@@ -41,19 +43,19 @@ public class GamePanel extends JPanel implements ActionListener {
         walls = new ArrayList<>();
 
         // Add walls to the walls ArrayList
-        int panelWidthInWalls = PANEL_WIDTH / GameDimensions.WALL_WIDTH;
-        int panelHeightInWalls = PANEL_HEIGHT / GameDimensions.WALL_HEIGHT;
+        int panelWidthInWalls = PANEL_WIDTH / Constants.WALL_WIDTH;
+        int panelHeightInWalls = PANEL_HEIGHT / Constants.WALL_HEIGHT;
 
         // Add top and bottom walls
         for (int i = 0; i < panelWidthInWalls; i++) {
-            walls.add(new Wall(i * GameDimensions.WALL_WIDTH, 0));
-            walls.add(new Wall(i * GameDimensions.WALL_WIDTH, PANEL_HEIGHT - GameDimensions.WALL_HEIGHT));
+            walls.add(new Wall(i * Constants.WALL_WIDTH, 0));
+            walls.add(new Wall(i * Constants.WALL_WIDTH, PANEL_HEIGHT - Constants.WALL_HEIGHT));
         }
 
         // Add left and right walls
         for (int i = 1; i < panelHeightInWalls - 1; i++) {
-            walls.add(new Wall(0, i * GameDimensions.WALL_HEIGHT));
-            walls.add(new Wall(PANEL_WIDTH - GameDimensions.WALL_WIDTH, i * GameDimensions.WALL_HEIGHT));
+            walls.add(new Wall(0, i * Constants.WALL_HEIGHT));
+            walls.add(new Wall(PANEL_WIDTH - Constants.WALL_WIDTH, i * Constants.WALL_HEIGHT));
         }
 
         // Rendering loop (calls actionPerformed() every DELAY milliseconds)
@@ -114,10 +116,10 @@ public class GamePanel extends JPanel implements ActionListener {
         Rectangle snakeHeadBounds = snake.getHeadBounds();
 
         // Check collision with food
-        if (snakeHeadBounds.intersects(food.getPosition().x, food.getPosition().y, GameDimensions.FOOD_SIZE,
-                GameDimensions.FOOD_SIZE)) {
+        if (snakeHeadBounds.intersects(food.getPosition().x, food.getPosition().y, Constants.FOOD_SIZE,
+                Constants.FOOD_SIZE)) {
             snake.setGrowing(true);
-            ScorePanel.Instance.setScore(ScorePanel.Instance.getScore() + 1);
+            Score.Instance.setScore(Score.Instance.getScore() + 1);
             food.setPosition(generateRandomFoodPosition());
         }
 
@@ -144,14 +146,14 @@ public class GamePanel extends JPanel implements ActionListener {
      * @return A Point object that represents the position of the food.
      */
     private Point generateRandomFoodPosition() {
-        int maxX = GameDimensions.PANEL_SIZE.width - GameDimensions.FOOD_SIZE;
-        int maxY = GameDimensions.PANEL_SIZE.height - GameDimensions.FOOD_SIZE;
+        int maxX = Constants.PANEL_SIZE.width - Constants.FOOD_SIZE;
+        int maxY = Constants.PANEL_SIZE.height - Constants.FOOD_SIZE;
 
         Random random = new Random();
         int x, y;
         do {
-            x = random.nextInt((maxX - 1) / GameDimensions.FOOD_SIZE) * GameDimensions.FOOD_SIZE;
-            y = random.nextInt((maxY - 1) / GameDimensions.FOOD_SIZE) * GameDimensions.FOOD_SIZE;
+            x = random.nextInt((maxX - 1) / Constants.FOOD_SIZE) * Constants.FOOD_SIZE;
+            y = random.nextInt((maxY - 1) / Constants.FOOD_SIZE) * Constants.FOOD_SIZE;
         } while (isWallCollision(x, y) || isSnakeCollision(x, y));
 
         System.out.println("Food position: " + x + ", " + y);
@@ -216,7 +218,7 @@ public class GamePanel extends JPanel implements ActionListener {
                     timer.start();
                 }
             } else if (keyCode == KeyEvent.VK_R) {
-                ScorePanel.Instance.setScore(0);
+                Score.Instance.setScore(0);
                 snake = new Snake();
                 food = new Food();
                 gameOver = false;

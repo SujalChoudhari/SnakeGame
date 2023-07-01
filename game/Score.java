@@ -1,10 +1,10 @@
-package app;
+package game;
 
 import javax.swing.JPanel;
 import java.awt.*;
 
 /**
- * The ScorePanel class represents a JPanel that displays the current score of
+ * The Score class represents a JPanel that displays the current score of
  * the game.
  * It extends the JPanel class and overrides the paintComponent method to
  * display the score.
@@ -17,14 +17,14 @@ import java.awt.*;
  * @extnds JPanel
  */
 
-public class ScorePanel extends JPanel {
+public class Score extends JPanel {
 
     // Singleton instance for Easy access
-    public static ScorePanel Instance;
+    public static Score Instance;
     private int score;
 
-    public ScorePanel() {
-        ScorePanel.Instance = this;
+    public Score() {
+        Score.Instance = this;
         score = 0;
         setBackground(Color.BLACK);
         setPreferredSize(new Dimension(800, 50));

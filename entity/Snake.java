@@ -3,15 +3,16 @@ package entity;
 import java.awt.*;
 import java.util.ArrayList;
 
-import app.GameDimensions;
-import app.GamePanel;
+import game.Game;
+import utils.Constants;
+import utils.Direction;
 
 /**
  * Represents the snake entity in the game.
  */
 public class Snake {
 
-    private static final int SIZE = GameDimensions.SNAKE_SIZE;
+    private static final int SIZE = Constants.SNAKE_SIZE;
     private static final int START_LENGTH = 3;
     private static final Color COLOR = Color.GREEN;
 
@@ -28,8 +29,8 @@ public class Snake {
         growing = false;
 
         // Initialize snake segments
-        int startX = GamePanel.PANEL_WIDTH / 2;
-        int startY = GamePanel.PANEL_HEIGHT / 2;
+        int startX = Game.PANEL_WIDTH / 2;
+        int startY = Game.PANEL_HEIGHT / 2;
         for (int i = 0; i < START_LENGTH; i++) {
             segments.add(new Point(startX - i * SIZE, startY));
         }

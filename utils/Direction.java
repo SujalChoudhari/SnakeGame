@@ -1,4 +1,4 @@
-package entity;
+package utils;
 
 /**
  * The Direction enum represents the possible directions that an entity can move

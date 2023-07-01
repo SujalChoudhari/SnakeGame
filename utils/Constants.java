@@ -1,4 +1,4 @@
-package app;
+package utils;
 
 import java.awt.Dimension;
 
@@ -10,7 +10,7 @@ import java.awt.Dimension;
  * These constants are used throughout the
  * game to ensure consistency in the game's dimensions.
  */
-public class GameDimensions {
+public class Constants {
 
     public static final Dimension PANEL_SIZE = new Dimension(800, 600);
     public static final int SNAKE_SIZE = 20;
